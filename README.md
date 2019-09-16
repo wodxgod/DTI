@@ -1,2 +1,2 @@
-# DTI - Discord Token Information Tool
-Get useful information from a single Discord authorization token.
+# Discord Token Information Tool
+Recieve useful information from a single users Discord authorization token.
