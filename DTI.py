@@ -48,27 +48,28 @@ def main():
                 #Printing response
                 print('Basic Information')
                 print('-----------------')
-                print(f'    {Fore.RESET}Username               {Fore.GREEN}{res_json["username"]}')
-                print(f'    {Fore.RESET}Discriminator          {Fore.GREEN}{res_json["discriminator"]}')
-                print(f'    {Fore.RESET}ID                     {Fore.GREEN}{res_json["id"]}')
-                print(f'    {Fore.RESET}Avatar                 {Fore.GREEN}{res_json["avatar"]}')
-                
+                print(f'    {Fore.RESET}Username               {Fore.GREEN}{res_json["username"]}#{res_json["discriminator"]}')
+                print(f'    {Fore.RESET}User ID                {Fore.GREEN}{res_json["id"]}')
+                avatar = res_json['avatar']
+                print(f'    {Fore.RESET}Avatar                 {Fore.GREEN}{avatar if avatar else "~"}')
                 print(f'{Fore.RESET}')
                 print('Contact Information')
                 print('-------------------')
-                print(f'    {Fore.RESET}Phone Number           {Fore.GREEN}{res_json["phone"]}')
-                print(f'    {Fore.RESET}Email                  {Fore.GREEN}{res_json["email"]}')
+                phone = res_json['phone']
+                print(f'    {Fore.RESET}Phone Number           {Fore.GREEN}{phone if phone else "~"}')
+                email = res_json['email']
+                print(f'    {Fore.RESET}Email                  {Fore.GREEN}{email if email else "~"}')
                 
                 print(f'{Fore.RESET}\n')
                 print('Account Security')
                 print('----------------')
-                print(f'    {Fore.RESET}2FA/MFA Enabled        {Fore.GREEN}{res_json["mfa_enalbed"]}')
+                print(f'    {Fore.RESET}2FA/MFA Enabled        {Fore.GREEN}{res_json["mfa_enabled"]}')
                 print(f'    {Fore.RESET}Flags                  {Fore.GREEN}{res_json["flags"]}')
 
                 print(f'{Fore.RESET}\n')
                 print('Other')
                 print('-----')
-                print(f'    {Fore.RESET}Locale                 {Fore.GREEN}{res_json["locale"]}')
+                print(f'    {Fore.RESET}Locale                 {Fore.GREEN}{res_json["locale"].upper()}')
                 print(f'    {Fore.RESET}Verified               {Fore.GREEN}{res_json["verified"]}')
 
             elif res.status_code == 401: #401 if invalid
