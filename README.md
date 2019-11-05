@@ -1,2 +1,2 @@
 # Discord Token Information Tool
-Recieve useful information from a single users Discord authorization token.
+Extract useful information from a single users Discord authorization token.
