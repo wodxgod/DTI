@@ -1,10 +1,15 @@
-import requests, json, os, subprocess, sys
+import requests
+import json
+import os
+import subprocess
+import sys
 from colorama import Fore, init
 
 #Version of Discord Token Info Tool
 __version__ = 1.0
 
 def main():
+    
     #Makes console support ANSI escape color codes
     init(convert=True)
 
@@ -52,7 +57,8 @@ def main():
                 print(f'    {Fore.RESET}User ID                {Fore.GREEN}{res_json["id"]}')
                 avatar = res_json['avatar']
                 print(f'    {Fore.RESET}Avatar                 {Fore.GREEN}{avatar if avatar else "~"}')
-                print(f'{Fore.RESET}')
+                
+                print(f'{Fore.RESET}\n')
                 print('Contact Information')
                 print('-------------------')
                 phone = res_json['phone']
