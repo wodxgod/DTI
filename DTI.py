@@ -6,7 +6,7 @@ import sys
 
 from colorama import Fore, init
 
-__version__ = 1.4
+__version__ = 1.5
 
 languages = {
     'DA'    : 'Danish',
