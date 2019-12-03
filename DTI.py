@@ -56,8 +56,8 @@ def main():
 
     if len(sys.argv) == 2:
         token = sys.argv[1]
-        try:
 
+        try:
             # sends request
             res = requests.get(
                 url='https://discordapp.com/api/v6/users/@me',
