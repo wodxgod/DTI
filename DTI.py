@@ -8,6 +8,37 @@ from colorama import Fore, init
 
 __version__ = 1.4
 
+languages = {
+    'DA'    : 'Danish',
+    'DE'    : 'German',
+    'EN-GB' : 'English, UK',
+    'EN-US' : 'English, US',
+    'ES-ES' : 'Spanish',
+    'FR'    : 'French',
+    'HR'    : 'Croatian',
+    'LT'    : 'Lithuanian',
+    'HU'    : 'Hungarian',
+    'NL'    : 'Dutch',
+    'NO'    : 'Norwegian',
+    'PL'    : 'Polish',
+    'PT-BR' : 'Portuguese, Brazilian',
+    'RO'    : 'Romanian, Romania',
+    'FI'    : 'Finnish',
+    'SV-SE' : 'Swedish',
+    'VI'    : 'Vietnamese',
+    'TR'    : 'Turkish',
+    'CS'    : 'Czech',
+    'EL'    : 'Greek',
+    'BG'    : 'Bulgarian',
+    'RU'    : 'Russian',
+    'UK'    : 'Ukranian',
+    'TH'    : 'Thai',
+    'ZH-CN' : 'Chinese, China',
+    'JA'    : 'Japanese',
+    'ZH-TW' : 'Chinese, Taiwan',
+    'KO'    : 'Korean'
+}
+
 def main():
     init(convert=True) # makes console support ANSI escape color codes
 
@@ -24,7 +55,7 @@ def main():
     {1}╚═════╝    ╚═╝   ╚═╝ {4}v{3}
 
    {1}Discord Token Info Tool
-          {4}by wodx#1337{2}
+          {4}by WodX{2}
     '''.format(Fore.CYAN, Fore.WHITE, Fore.RESET, __version__, Fore.YELLOW))
 
     if len(sys.argv) == 2:
@@ -54,21 +85,22 @@ def main():
                 print('Contact Information')
                 print('-------------------')
                 phone = res_json['phone']
-                print(f'    {Fore.RESET}Phone Number           {Fore.GREEN}{phone if phone else ""}')
+                print(f'    {Fore.RESET}Phone Number           {Fore.YELLOW}{phone if phone else ""}')
                 email = res_json['email']
-                print(f'    {Fore.RESET}Email                  {Fore.GREEN}{email if email else ""}')
+                print(f'    {Fore.RESET}Email                  {Fore.YELLOW}{email if email else ""}')
                 
                 print(f'{Fore.RESET}\n')
                 print('Account Security')
                 print('----------------')
-                print(f'    {Fore.RESET}2FA/MFA Enabled        {Fore.GREEN}{res_json["mfa_enabled"]}')
-                print(f'    {Fore.RESET}Flags                  {Fore.GREEN}{res_json["flags"]}')
+                print(f'    {Fore.RESET}2FA/MFA Enabled        {Fore.BLUE}{res_json["mfa_enabled"]}')
+                print(f'    {Fore.RESET}Flags                  {Fore.BLUE}{res_json["flags"]}')
 
                 print(f'{Fore.RESET}\n')
                 print('Other')
                 print('-----')
-                print(f'    {Fore.RESET}Locale                 {Fore.GREEN}{res_json["locale"].upper()}')
-                print(f'    {Fore.RESET}Verified               {Fore.GREEN}{res_json["verified"]}')
+                locale = res_json['locale'].upper()
+                print(f'    {Fore.RESET}Locale                 {Fore.RED}{locale} ({languages.get(locale)})')
+                print(f'    {Fore.RESET}Verified               {Fore.RED}{res_json["verified"]}')
 
             elif res.status_code == 401: # code 401 if invalid
                 print(f'{Fore.RED}[-] {Fore.RESET}Invalid token')
