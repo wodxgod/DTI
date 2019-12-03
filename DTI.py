@@ -3,23 +3,18 @@ import json
 import os
 import subprocess
 import sys
+
 from colorama import Fore, init
 
-#Version of Discord Token Info Tool
-__version__ = 1.3
+__version__ = 1.4
 
 def main():
-    
-    #Makes console support ANSI escape color codes
-    init(convert=True)
+    init(convert=True) # makes console support ANSI escape color codes
 
-    #Changing console title
-    print('\33]0;Discord Token Info by WodX\a', end='', flush=True)
+    print('\33]0;Discord Token Info by WodX\a', end='', flush=True) # changes console title
 
-    #Clearing console
-    subprocess.call('cls' if os.name == 'nt' else 'clear', shell=True)
+    subprocess.call('cls' if os.name == 'nt' else 'clear', shell=True) # clears console
 
-    #Printing ASCII art banner
     print('''
     {0}██████{1}╗ {0}████████{1}╗{0}██{1}╗
     {0}██{1}╔══{0}██{1}╗╚══{0}██{1}╔══╝{0}██{1}║
@@ -29,14 +24,14 @@ def main():
     {1}╚═════╝    ╚═╝   ╚═╝ {4}v{3}
 
    {1}Discord Token Info Tool
-          {4}By WodX{2}
+          {4}by wodx#1337{2}
     '''.format(Fore.CYAN, Fore.WHITE, Fore.RESET, __version__, Fore.YELLOW))
 
     if len(sys.argv) == 2:
         token = sys.argv[1]
         try:
 
-            #Sending request
+            # sends request
             res = requests.get(
                 url='https://discordapp.com/api/v6/users/@me',
                 headers={
@@ -45,12 +40,9 @@ def main():
                     'Content-Type': 'application/json'
                 })
                 
-            if res.status_code == 200: #200 if valid
-
-                #Converting response into a JSON object
+            if res.status_code == 200: # code 200 if valid
                 res_json = json.loads(res.text)
 
-                #Printing response
                 print('Basic Information')
                 print('-----------------')
                 print(f'    {Fore.RESET}Username               {Fore.GREEN}{res_json["username"]}#{res_json["discriminator"]}')
@@ -78,7 +70,7 @@ def main():
                 print(f'    {Fore.RESET}Locale                 {Fore.GREEN}{res_json["locale"].upper()}')
                 print(f'    {Fore.RESET}Verified               {Fore.GREEN}{res_json["verified"]}')
 
-            elif res.status_code == 401: #401 if invalid
+            elif res.status_code == 401: # code 401 if invalid
                 print(f'{Fore.RED}[-] {Fore.RESET}Invalid token')
 
             else:
