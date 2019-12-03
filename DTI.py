@@ -6,7 +6,7 @@ import sys
 from colorama import Fore, init
 
 #Version of Discord Token Info Tool
-__version__ = 1.0
+__version__ = 1.3
 
 def main():
     
@@ -56,15 +56,15 @@ def main():
                 print(f'    {Fore.RESET}Username               {Fore.GREEN}{res_json["username"]}#{res_json["discriminator"]}')
                 print(f'    {Fore.RESET}User ID                {Fore.GREEN}{res_json["id"]}')
                 avatar = res_json['avatar']
-                print(f'    {Fore.RESET}Avatar                 {Fore.GREEN}{avatar if avatar else "~"}')
+                print(f'    {Fore.RESET}Avatar                 {Fore.GREEN}{avatar if avatar else ""}')
                 
                 print(f'{Fore.RESET}\n')
                 print('Contact Information')
                 print('-------------------')
                 phone = res_json['phone']
-                print(f'    {Fore.RESET}Phone Number           {Fore.GREEN}{phone if phone else "~"}')
+                print(f'    {Fore.RESET}Phone Number           {Fore.GREEN}{phone if phone else ""}')
                 email = res_json['email']
-                print(f'    {Fore.RESET}Email                  {Fore.GREEN}{email if email else "~"}')
+                print(f'    {Fore.RESET}Email                  {Fore.GREEN}{email if email else ""}')
                 
                 print(f'{Fore.RESET}\n')
                 print('Account Security')
