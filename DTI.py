@@ -89,6 +89,7 @@ def main():
                 print(f'    {Fore.RESET}Avatar ID              {Fore.GREEN}{avatar_id if avatar_id else ""}')
                 print(f'    {Fore.RESET}Avatar URL             {Fore.GREEN}{f"https://cdn.discordapp.com/avatars/{user_id}/{avatar_id}.webp" if avatar_id else ""}')
                 print(f'    {Fore.RESET}Mention                {Fore.GREEN}<@{user_id}>')
+                print(f'    {Fore.RESET}Token                  {Fore.GREEN}{token}')
                 print(f'{Fore.RESET}\n')
 
                 print('Contact Information')
