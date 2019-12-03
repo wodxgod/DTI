@@ -6,45 +6,45 @@ import sys
 
 from colorama import Fore, init
 
-__version__ = 1.5
+__version__ = 1.7
 
 languages = {
-    'DA'    : 'Danish',
-    'DE'    : 'German',
-    'EN-GB' : 'English, UK',
-    'EN-US' : 'English, US',
-    'ES-ES' : 'Spanish',
-    'FR'    : 'French',
-    'HR'    : 'Croatian',
-    'LT'    : 'Lithuanian',
-    'HU'    : 'Hungarian',
-    'NL'    : 'Dutch',
-    'NO'    : 'Norwegian',
-    'PL'    : 'Polish',
-    'PT-BR' : 'Portuguese, Brazilian',
-    'RO'    : 'Romanian, Romania',
-    'FI'    : 'Finnish',
-    'SV-SE' : 'Swedish',
-    'VI'    : 'Vietnamese',
-    'TR'    : 'Turkish',
-    'CS'    : 'Czech',
-    'EL'    : 'Greek',
-    'BG'    : 'Bulgarian',
-    'RU'    : 'Russian',
-    'UK'    : 'Ukranian',
-    'TH'    : 'Thai',
-    'ZH-CN' : 'Chinese, China',
-    'JA'    : 'Japanese',
-    'ZH-TW' : 'Chinese, Taiwan',
-    'KO'    : 'Korean'
+    'da'    : 'Danish',
+    'de'    : 'German',
+    'en-GB' : 'English, UK',
+    'en-US' : 'English, US',
+    'es-ES' : 'Spanish',
+    'fr'    : 'French',
+    'hr'    : 'Croatian',
+    'lt'    : 'Lithuanian',
+    'hu'    : 'Hungarian',
+    'nl'    : 'Dutch',
+    'no'    : 'Norwegian',
+    'pl'    : 'Polish',
+    'pt-BR' : 'Portuguese, Brazilian',
+    'ro'    : 'Romanian, Romania',
+    'fi'    : 'Finnish',
+    'sv-SE' : 'Swedish',
+    'vi'    : 'Vietnamese',
+    'tr'    : 'Turkish',
+    'cs'    : 'Czech',
+    'el'    : 'Greek',
+    'bg'    : 'Bulgarian',
+    'ru'    : 'Russian',
+    'uk'    : 'Ukranian',
+    'th'    : 'Thai',
+    'zh-CN' : 'Chinese, China',
+    'ja'    : 'Japanese',
+    'zh-TW' : 'Chinese, Taiwan',
+    'ko'    : 'Korean'
 }
 
 def main():
     init(convert=True) # makes console support ANSI escape color codes
 
-    print('\33]0;Discord Token Info by WodX\a', end='', flush=True) # changes console title
+    #print('\33]0;Discord Token Info by WodX\a', end='', flush=True) # changes console title
 
-    subprocess.call('cls' if os.name == 'nt' else 'clear', shell=True) # clears console
+    #subprocess.call('cls' if os.name == 'nt' else 'clear', shell=True) # clears console
 
     print('''
     {0}██████{1}╗ {0}████████{1}╗{0}██{1}╗
@@ -69,38 +69,48 @@ def main():
                     'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/53',
                     'Authorization': token,
                     'Content-Type': 'application/json'
-                })
+                }
+            )
                 
             if res.status_code == 200: # code 200 if valid
                 res_json = json.loads(res.text)
 
+                user_name = f'{res_json["username"]}#{res_json["discriminator"]}'
+                user_id = res_json['id']
+                avatar_id = res_json['avatar']
+                phone_number = res_json['phone']
+                email = res_json['email']
+                mfa_enabled = res_json['mfa_enabled']
+                flags = res_json['flags']
+                locale = res_json['locale']
+                verified = res_json['verified']
+                language = languages.get(locale)
+
                 print('Basic Information')
                 print('-----------------')
-                print(f'    {Fore.RESET}Username               {Fore.GREEN}{res_json["username"]}#{res_json["discriminator"]}')
-                print(f'    {Fore.RESET}User ID                {Fore.GREEN}{res_json["id"]}')
-                avatar = res_json['avatar']
-                print(f'    {Fore.RESET}Avatar                 {Fore.GREEN}{avatar if avatar else ""}')
-                
+                print(f'    {Fore.RESET}User Name              {Fore.GREEN}{user_name}')
+                print(f'    {Fore.RESET}User ID                {Fore.GREEN}{user_id}')
+                print(f'    {Fore.RESET}Avatar ID              {Fore.GREEN}{avatar_id if avatar_id else ""}')
+                print(f'    {Fore.RESET}Avatar URL             {Fore.GREEN}{f"https://cdn.discordapp.com/avatars/{user_id}/{avatar_id}.webp" if avatar_id else ""}')
+                print(f'    {Fore.RESET}Mention                {Fore.GREEN}<@{user_id}>')
                 print(f'{Fore.RESET}\n')
+
                 print('Contact Information')
                 print('-------------------')
-                phone = res_json['phone']
-                print(f'    {Fore.RESET}Phone Number           {Fore.YELLOW}{phone if phone else ""}')
-                email = res_json['email']
+                print(f'    {Fore.RESET}Phone Number           {Fore.YELLOW}{phone_number if phone_number else ""}')
                 print(f'    {Fore.RESET}Email                  {Fore.YELLOW}{email if email else ""}')
-                
                 print(f'{Fore.RESET}\n')
+
                 print('Account Security')
                 print('----------------')
-                print(f'    {Fore.RESET}2FA/MFA Enabled        {Fore.BLUE}{res_json["mfa_enabled"]}')
-                print(f'    {Fore.RESET}Flags                  {Fore.BLUE}{res_json["flags"]}')
-
+                print(f'    {Fore.RESET}2FA/MFA Enabled        {Fore.BLUE}{mfa_enabled}')
+                print(f'    {Fore.RESET}Flags                  {Fore.BLUE}{flags}')
                 print(f'{Fore.RESET}\n')
+
                 print('Other')
                 print('-----')
-                locale = res_json['locale'].upper()
-                print(f'    {Fore.RESET}Locale                 {Fore.RED}{locale} ({languages.get(locale)})')
-                print(f'    {Fore.RESET}Verified               {Fore.RED}{res_json["verified"]}')
+                print(f'    {Fore.RESET}Locale                 {Fore.RED}{locale} ({language})')
+                print(f'    {Fore.RESET}Verified               {Fore.RED}{verified}')
 
             elif res.status_code == 401: # code 401 if invalid
                 print(f'{Fore.RED}[-] {Fore.RESET}Invalid token')
