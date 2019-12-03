@@ -42,10 +42,6 @@ languages = {
 def main():
     init(convert=True) # makes console support ANSI escape color codes
 
-    #print('\33]0;Discord Token Info by WodX\a', end='', flush=True) # changes console title
-
-    #subprocess.call('cls' if os.name == 'nt' else 'clear', shell=True) # clears console
-
     print('''
     {0}██████{1}╗ {0}████████{1}╗{0}██{1}╗
     {0}██{1}╔══{0}██{1}╗╚══{0}██{1}╔══╝{0}██{1}║
