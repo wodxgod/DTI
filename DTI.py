@@ -74,6 +74,8 @@ def main():
                 user_name = f'{res_json["username"]}#{res_json["discriminator"]}'
                 user_id = res_json['id']
                 avatar_id = res_json['avatar']
+                avatar_url = f'https://cdn.discordapp.com/avatars/{user_id}/{avatar_id}.webp'
+                mention = f'<@{user_id}>'
                 phone_number = res_json['phone']
                 email = res_json['email']
                 mfa_enabled = res_json['mfa_enabled']
@@ -87,8 +89,8 @@ def main():
                 print(f'    {Fore.RESET}User Name              {Fore.GREEN}{user_name}')
                 print(f'    {Fore.RESET}User ID                {Fore.GREEN}{user_id}')
                 print(f'    {Fore.RESET}Avatar ID              {Fore.GREEN}{avatar_id if avatar_id else ""}')
-                print(f'    {Fore.RESET}Avatar URL             {Fore.GREEN}{f"https://cdn.discordapp.com/avatars/{user_id}/{avatar_id}.webp" if avatar_id else ""}')
-                print(f'    {Fore.RESET}Mention                {Fore.GREEN}<@{user_id}>')
+                print(f'    {Fore.RESET}Avatar URL             {Fore.GREEN}{avatar_url if avatar_id else ""}')
+                print(f'    {Fore.RESET}Mention                {Fore.GREEN}{mention}')
                 print(f'    {Fore.RESET}Token                  {Fore.GREEN}{token}')
                 print(f'{Fore.RESET}\n')
 
