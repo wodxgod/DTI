@@ -162,7 +162,6 @@ def main():
                                 if not val:
                                     continue
                                 print(Fore.RESET + '    {:<23}{}{}'.format(key, Fore.CYAN, val))
-                        print(f'{Fore.RESET}\n')
                     else:
                         for i, x in enumerate(billing_info):
                             payment_method = x['Payment Type']
@@ -175,7 +174,7 @@ def main():
                                 print(Fore.RESET + '        {:<23}{}{}'.format(key, Fore.CYAN, val))
                             if i < len(billing_info) - 1:
                                 print(f'{Fore.RESET}\n')
-                        print(f'{Fore.RESET}\n')
+                    print(f'{Fore.RESET}\n')
 
                 print('Account Security')
                 print('----------------')
