@@ -15,7 +15,7 @@ Extract useful information from a single users Discord authorization token.
 - Phone number
 - Email
 - Billing information (address, full name, credit card information, PayPal information etc.)
-- 2FA state
+- 2FA/MFA status
 - Account flags
 - Locale
 - Language
