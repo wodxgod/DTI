@@ -6,3 +6,17 @@ Extract useful information from a single users Discord authorization token.
 2. Download this repository
 3. Go to the downloaded repository directory via `$ cd .\Discord-Token-Information-Tool`
 4. Install the required modules via `$ pip install -r requirements.txt`
+
+# What Information DTI Can Extract
+- User name
+- User ID
+- Avatar URL
+- Date of creation
+- Phone number
+- Email
+- Billing information (address, full name, credit card information, PayPal information etc.)
+- 2FA state
+- Account flags
+- Locale
+- Language
+- Email verification status
