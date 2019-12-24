@@ -164,8 +164,7 @@ def main():
                                 print(Fore.RESET + '    {:<23}{}{}'.format(key, Fore.CYAN, val))
                     else:
                         for i, x in enumerate(billing_info):
-                            payment_method = x['Payment Type']
-                            title = f'Payment Method #{i + 1} ({payment_method})'
+                            title = f'Payment Method #{i + 1} ({x["Payment Type"]})'
                             print('    ' + title)
                             print('    ' + ('=' * len(title)))
                             for j, (key, val) in enumerate(x.items()):
