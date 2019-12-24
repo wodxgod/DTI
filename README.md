@@ -1,6 +1,8 @@
 # Discord Token Information Tool
 Extract useful information from a single users Discord authorization token.
 
+![alt](https://github.com/WodxTV/Discord-Token-Information-Tool/blob/master/preview.jpg)
+
 # Installation
 1. Download and install Python 3
 2. Download this repository
