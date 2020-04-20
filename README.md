@@ -13,7 +13,7 @@ Extract useful information from a single users Discord authorization token.
 - Username
 - User ID
 - Avatar URL
-- Acount creation date
+- Account creation date
 - Phone number
 - Email
 - Billing information (address, full name, credit card information, PayPal information etc.)
