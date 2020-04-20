@@ -213,8 +213,7 @@ def main():
 
             else:
                 print(f'{Fore.RED}[-] {Fore.RESET}An error occurred while sending request')
-        except Exception as e:
-            print(e)
+        except:
             print(f'{Fore.RED}[-] {Fore.RESET}An error occurred while getting request')
     else:
         print(f'Usage: python {sys.argv[0]} [token]')
