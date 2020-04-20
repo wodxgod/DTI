@@ -1,11 +1,11 @@
 import requests
 import json
 import sys
-import datetime
 
+from datetime import datetime
 from colorama import Fore, init
 
-__version__ = 1.8
+__version__ = 1.9
 
 languages = {
     'da'    : 'Danish, Denmark',
@@ -44,6 +44,7 @@ cc_digits = {
     'mastercard': '5'
 }
 
+
 def main():
     init(convert=True) # makes console support ANSI escape color codes
 
@@ -56,7 +57,7 @@ def main():
     {1}╚═════╝    ╚═╝   ╚═╝ {4}v{3}
 
    {1}Discord Token Info Tool
-          {4}by WodX{2}
+          {4}by wodx{2}
     '''.format(Fore.CYAN, Fore.WHITE, Fore.RESET, __version__, Fore.YELLOW))
 
     if len(sys.argv) == 2:
@@ -69,23 +70,36 @@ def main():
             }
 
             res = requests.get('https://discordapp.com/api/v6/users/@me', headers=headers)
+
             if res.status_code == 200: # code 200 if valid
 
                 # user info
                 res_json = res.json()
+
                 user_name = f'{res_json["username"]}#{res_json["discriminator"]}'
                 user_id = res_json['id']
                 avatar_id = res_json['avatar']
-                avatar_url = f'https://cdn.discordapp.com/avatars/{user_id}/{avatar_id}'
+                avatar_url = f'https://cdn.discordapp.com/avatars/{user_id}/{avatar_id}.gif'
                 phone_number = res_json['phone']
                 email = res_json['email']
                 mfa_enabled = res_json['mfa_enabled']
                 flags = res_json['flags']
                 locale = res_json['locale']
                 verified = res_json['verified']
-                language = languages.get(locale)
-                creation_date = datetime.datetime.utcfromtimestamp(((int(user_id) >> 22) + 1420070400000) / 1000).strftime('%d-%m-%Y %H:%M:%S UTC')
                 
+                language = languages.get(locale)
+
+                creation_date = datetime.utcfromtimestamp(((int(user_id) >> 22) + 1420070400000) / 1000).strftime('%d-%m-%Y %H:%M:%S UTC')
+
+                has_nitro = False
+                res = requests.get('https://discordapp.com/api/v6/users/@me/billing/subscriptions', headers=headers)
+                nitro_data = res.json()
+                has_nitro = bool(len(nitro_data) > 0)
+                if has_nitro:
+                    d1 = datetime.strptime(nitro_data[0]["current_period_end"].split('.')[0], "%Y-%m-%dT%H:%M:%S")
+                    d2 = datetime.strptime(nitro_data[0]["current_period_start"].split('.')[0], "%Y-%m-%dT%H:%M:%S")
+                    days_left = abs((d2 - d1).days)
+
                 # billing info
                 billing_info = []
                 for x in requests.get('https://discordapp.com/api/v6/users/@me/billing/payment-sources', headers=headers).json():
@@ -140,12 +154,20 @@ def main():
 
                 print('Basic Information')
                 print('-----------------')
-                print(f'    {Fore.RESET}User Name              {Fore.GREEN}{user_name}')
+                print(f'    {Fore.RESET}Username               {Fore.GREEN}{user_name}')
                 print(f'    {Fore.RESET}User ID                {Fore.GREEN}{user_id}')
+                print(f'    {Fore.RESET}Creation Date          {Fore.GREEN}{creation_date}')
                 print(f'    {Fore.RESET}Avatar URL             {Fore.GREEN}{avatar_url if avatar_id else ""}')
-                print(f'    {Fore.RESET}Date of Creation       {Fore.GREEN}{creation_date}')
                 print(f'    {Fore.RESET}Token                  {Fore.GREEN}{token}')
                 print(f'{Fore.RESET}\n')
+                
+                print('Nitro Information')
+                print('-------------------')
+                print(f'    {Fore.RESET}Nitro Status           {Fore.MAGENTA}{has_nitro}')
+                if has_nitro:
+                    print(f'    {Fore.RESET}Expires in             {Fore.MAGENTA}{days_left} day(s)')
+                print(f'{Fore.RESET}\n')
+
 
                 print('Contact Information')
                 print('-------------------')
@@ -191,8 +213,9 @@ def main():
 
             else:
                 print(f'{Fore.RED}[-] {Fore.RESET}An error occurred while sending request')
-        except:
-            print(f'{Fore.RED}[-] {Fore.RESET}An error occurred while sending request')
+        except Exception as e:
+            print(e)
+            print(f'{Fore.RED}[-] {Fore.RESET}An error occurred while getting request')
     else:
         print(f'Usage: python {sys.argv[0]} [token]')
 

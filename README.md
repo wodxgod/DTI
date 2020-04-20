@@ -10,10 +10,10 @@ Extract useful information from a single users Discord authorization token.
 4. Install the required modules via `$ pip install -r requirements.txt`
 
 # What Information DTI Can Extract
-- User name
+- Username
 - User ID
 - Avatar URL
-- Date of creation
+- Acount creation date
 - Phone number
 - Email
 - Billing information (address, full name, credit card information, PayPal information etc.)
@@ -22,3 +22,11 @@ Extract useful information from a single users Discord authorization token.
 - Locale
 - Language
 - Email verification status
+- Nitro information (status, expiration date in days)
+
+# TODO
+- Amount of friends
+- Amount of guilds
+- Owned guilds
+- Current status (online, offline ... custom status)
+- Connections
