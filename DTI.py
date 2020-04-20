@@ -44,7 +44,6 @@ cc_digits = {
     'mastercard': '5'
 }
 
-
 def main():
     init(convert=True) # makes console support ANSI escape color codes
 
@@ -162,7 +161,7 @@ def main():
                 print(f'{Fore.RESET}\n')
                 
                 print('Nitro Information')
-                print('-------------------')
+                print('-----------------')
                 print(f'    {Fore.RESET}Nitro Status           {Fore.MAGENTA}{has_nitro}')
                 if has_nitro:
                     print(f'    {Fore.RESET}Expires in             {Fore.MAGENTA}{days_left} day(s)')
