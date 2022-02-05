@@ -188,6 +188,13 @@ def main():
                     f'    {Fore.RESET}Email                  {Fore.YELLOW}{email if email else ""}')
                 print(f'{Fore.RESET}\n')
 
+                print('Connections')
+                print('-------------------')
+                for connection in requests.get(f'https://discordapp.com/api/v6/users/{user_id}/profile?with_mutual_guilds=false', headers=headers).json()['connected_accounts']:
+                    print('    {:<23}{}{}'.format(
+                        connection['type'], Fore.CYAN, connection['name']))
+                print(f'{Fore.RESET}\n')
+
                 if len(billing_info) > 0:
                     print('Billing Information')
                     print('-------------------')
@@ -226,16 +233,17 @@ def main():
                     f'    {Fore.RESET}Locale                 {Fore.RED}{locale} ({language})')
                 print(
                     f'    {Fore.RESET}Email Verified         {Fore.RED}{verified}')
-
+                print(
+                    f'    {Fore.RESET}Amount friends         {Fore.RED}{len(requests.get("https://canary.discord.com/api/v9/users/@me/relationships", headers=headers).json())}')
             elif res.status_code == 401:  # code 401 if invalid
                 print(f'{Fore.RED}[-] {Fore.RESET}Invalid token')
 
             else:
                 print(
                     f'{Fore.RED}[-] {Fore.RESET}An error occurred while sending request')
-        except:
+        except Exception as e:
             print(
-                f'{Fore.RED}[-] {Fore.RESET}An error occurred while getting request')
+                f'{Fore.RED}[-] {Fore.RESET}An error occurred while getting request [{e}]')
     else:
         print(f'Usage: python {sys.argv[0]} [token]')
 
