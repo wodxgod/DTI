@@ -8,34 +8,34 @@ from colorama import Fore, init
 __version__ = 1.9
 
 languages = {
-    'da'    : 'Danish, Denmark',
-    'de'    : 'German, Germany',
-    'en-GB' : 'English, United Kingdom',
-    'en-US' : 'English, United States',
-    'es-ES' : 'Spanish, Spain',
-    'fr'    : 'French, France',
-    'hr'    : 'Croatian, Croatia',
-    'lt'    : 'Lithuanian, Lithuania',
-    'hu'    : 'Hungarian, Hungary',
-    'nl'    : 'Dutch, Netherlands',
-    'no'    : 'Norwegian, Norway',
-    'pl'    : 'Polish, Poland',
-    'pt-BR' : 'Portuguese, Brazilian, Brazil',
-    'ro'    : 'Romanian, Romania',
-    'fi'    : 'Finnish, Finland',
-    'sv-SE' : 'Swedish, Sweden',
-    'vi'    : 'Vietnamese, Vietnam',
-    'tr'    : 'Turkish, Turkey',
-    'cs'    : 'Czech, Czechia, Czech Republic',
-    'el'    : 'Greek, Greece',
-    'bg'    : 'Bulgarian, Bulgaria',
-    'ru'    : 'Russian, Russia',
-    'uk'    : 'Ukranian, Ukraine',
-    'th'    : 'Thai, Thailand',
-    'zh-CN' : 'Chinese, China',
-    'ja'    : 'Japanese',
-    'zh-TW' : 'Chinese, Taiwan',
-    'ko'    : 'Korean, Korea'
+    'da': 'Danish, Denmark',
+    'de': 'German, Germany',
+    'en-GB': 'English, United Kingdom',
+    'en-US': 'English, United States',
+    'es-ES': 'Spanish, Spain',
+    'fr': 'French, France',
+    'hr': 'Croatian, Croatia',
+    'lt': 'Lithuanian, Lithuania',
+    'hu': 'Hungarian, Hungary',
+    'nl': 'Dutch, Netherlands',
+    'no': 'Norwegian, Norway',
+    'pl': 'Polish, Poland',
+    'pt-BR': 'Portuguese, Brazilian, Brazil',
+    'ro': 'Romanian, Romania',
+    'fi': 'Finnish, Finland',
+    'sv-SE': 'Swedish, Sweden',
+    'vi': 'Vietnamese, Vietnam',
+    'tr': 'Turkish, Turkey',
+    'cs': 'Czech, Czechia, Czech Republic',
+    'el': 'Greek, Greece',
+    'bg': 'Bulgarian, Bulgaria',
+    'ru': 'Russian, Russia',
+    'uk': 'Ukranian, Ukraine',
+    'th': 'Thai, Thailand',
+    'zh-CN': 'Chinese, China',
+    'ja': 'Japanese',
+    'zh-TW': 'Chinese, Taiwan',
+    'ko': 'Korean, Korea'
 }
 
 cc_digits = {
@@ -44,8 +44,9 @@ cc_digits = {
     'mastercard': '5'
 }
 
+
 def main():
-    init(convert=True) # makes console support ANSI escape color codes
+    init(convert=True)  # makes console support ANSI escape color codes
 
     print('''
     {0}██████{1}╗ {0}████████{1}╗{0}██{1}╗
@@ -68,9 +69,10 @@ def main():
                 'Content-Type': 'application/json'
             }
 
-            res = requests.get('https://discordapp.com/api/v6/users/@me', headers=headers)
+            res = requests.get(
+                'https://discordapp.com/api/v6/users/@me', headers=headers)
 
-            if res.status_code == 200: # code 200 if valid
+            if res.status_code == 200:  # code 200 if valid
 
                 # user info
                 res_json = res.json()
@@ -85,18 +87,22 @@ def main():
                 flags = res_json['flags']
                 locale = res_json['locale']
                 verified = res_json['verified']
-                
+
                 language = languages.get(locale)
 
-                creation_date = datetime.utcfromtimestamp(((int(user_id) >> 22) + 1420070400000) / 1000).strftime('%d-%m-%Y %H:%M:%S UTC')
+                creation_date = datetime.utcfromtimestamp(
+                    ((int(user_id) >> 22) + 1420070400000) / 1000).strftime('%d-%m-%Y %H:%M:%S UTC')
 
                 has_nitro = False
-                res = requests.get('https://discordapp.com/api/v6/users/@me/billing/subscriptions', headers=headers)
+                res = requests.get(
+                    'https://discordapp.com/api/v6/users/@me/billing/subscriptions', headers=headers)
                 nitro_data = res.json()
                 has_nitro = bool(len(nitro_data) > 0)
                 if has_nitro:
-                    d1 = datetime.strptime(nitro_data[0]["current_period_end"].split('.')[0], "%Y-%m-%dT%H:%M:%S")
-                    d2 = datetime.strptime(nitro_data[0]["current_period_start"].split('.')[0], "%Y-%m-%dT%H:%M:%S")
+                    d1 = datetime.strptime(nitro_data[0]["current_period_end"].split('.')[
+                                           0], "%Y-%m-%dT%H:%M:%S")
+                    d2 = datetime.strptime(nitro_data[0]["current_period_start"].split('.')[
+                                           0], "%Y-%m-%dT%H:%M:%S")
                     days_left = abs((d2 - d1).days)
 
                 # billing info
@@ -117,7 +123,7 @@ def main():
                         cc_last = x['last_4']
                         cc_month = str(x['expires_month'])
                         cc_year = str(x['expires_year'])
-                        
+
                         data = {
                             'Payment Type': 'Credit Card',
                             'Valid': not x['invalid'],
@@ -153,25 +159,33 @@ def main():
 
                 print('Basic Information')
                 print('-----------------')
-                print(f'    {Fore.RESET}Username               {Fore.GREEN}{user_name}')
-                print(f'    {Fore.RESET}User ID                {Fore.GREEN}{user_id}')
-                print(f'    {Fore.RESET}Creation Date          {Fore.GREEN}{creation_date}')
-                print(f'    {Fore.RESET}Avatar URL             {Fore.GREEN}{avatar_url if avatar_id else ""}')
-                print(f'    {Fore.RESET}Token                  {Fore.GREEN}{token}')
-                print(f'{Fore.RESET}\n')
-                
-                print('Nitro Information')
-                print('-----------------')
-                print(f'    {Fore.RESET}Nitro Status           {Fore.MAGENTA}{has_nitro}')
-                if has_nitro:
-                    print(f'    {Fore.RESET}Expires in             {Fore.MAGENTA}{days_left} day(s)')
+                print(
+                    f'    {Fore.RESET}Username               {Fore.GREEN}{user_name}')
+                print(
+                    f'    {Fore.RESET}User ID                {Fore.GREEN}{user_id}')
+                print(
+                    f'    {Fore.RESET}Creation Date          {Fore.GREEN}{creation_date}')
+                print(
+                    f'    {Fore.RESET}Avatar URL             {Fore.GREEN}{avatar_url if avatar_id else ""}')
+                print(
+                    f'    {Fore.RESET}Token                  {Fore.GREEN}{token}')
                 print(f'{Fore.RESET}\n')
 
+                print('Nitro Information')
+                print('-----------------')
+                print(
+                    f'    {Fore.RESET}Nitro Status           {Fore.MAGENTA}{has_nitro}')
+                if has_nitro:
+                    print(
+                        f'    {Fore.RESET}Expires in             {Fore.MAGENTA}{days_left} day(s)')
+                print(f'{Fore.RESET}\n')
 
                 print('Contact Information')
                 print('-------------------')
-                print(f'    {Fore.RESET}Phone Number           {Fore.YELLOW}{phone_number if phone_number else ""}')
-                print(f'    {Fore.RESET}Email                  {Fore.YELLOW}{email if email else ""}')
+                print(
+                    f'    {Fore.RESET}Phone Number           {Fore.YELLOW}{phone_number if phone_number else ""}')
+                print(
+                    f'    {Fore.RESET}Email                  {Fore.YELLOW}{email if email else ""}')
                 print(f'{Fore.RESET}\n')
 
                 if len(billing_info) > 0:
@@ -182,7 +196,8 @@ def main():
                             for key, val in x.items():
                                 if not val:
                                     continue
-                                print(Fore.RESET + '    {:<23}{}{}'.format(key, Fore.CYAN, val))
+                                print(
+                                    Fore.RESET + '    {:<23}{}{}'.format(key, Fore.CYAN, val))
                     else:
                         for i, x in enumerate(billing_info):
                             title = f'Payment Method #{i + 1} ({x["Payment Type"]})'
@@ -191,31 +206,39 @@ def main():
                             for j, (key, val) in enumerate(x.items()):
                                 if not val or j == 0:
                                     continue
-                                print(Fore.RESET + '        {:<23}{}{}'.format(key, Fore.CYAN, val))
+                                print(
+                                    Fore.RESET + '        {:<23}{}{}'.format(key, Fore.CYAN, val))
                             if i < len(billing_info) - 1:
                                 print(f'{Fore.RESET}\n')
                     print(f'{Fore.RESET}\n')
 
                 print('Account Security')
                 print('----------------')
-                print(f'    {Fore.RESET}2FA/MFA Enabled        {Fore.BLUE}{mfa_enabled}')
-                print(f'    {Fore.RESET}Flags                  {Fore.BLUE}{flags}')
+                print(
+                    f'    {Fore.RESET}2FA/MFA Enabled        {Fore.BLUE}{mfa_enabled}')
+                print(
+                    f'    {Fore.RESET}Flags                  {Fore.BLUE}{flags}')
                 print(f'{Fore.RESET}\n')
 
                 print('Other')
                 print('-----')
-                print(f'    {Fore.RESET}Locale                 {Fore.RED}{locale} ({language})')
-                print(f'    {Fore.RESET}Email Verified         {Fore.RED}{verified}')
+                print(
+                    f'    {Fore.RESET}Locale                 {Fore.RED}{locale} ({language})')
+                print(
+                    f'    {Fore.RESET}Email Verified         {Fore.RED}{verified}')
 
-            elif res.status_code == 401: # code 401 if invalid
+            elif res.status_code == 401:  # code 401 if invalid
                 print(f'{Fore.RED}[-] {Fore.RESET}Invalid token')
 
             else:
-                print(f'{Fore.RED}[-] {Fore.RESET}An error occurred while sending request')
+                print(
+                    f'{Fore.RED}[-] {Fore.RESET}An error occurred while sending request')
         except:
-            print(f'{Fore.RED}[-] {Fore.RESET}An error occurred while getting request')
+            print(
+                f'{Fore.RED}[-] {Fore.RESET}An error occurred while getting request')
     else:
         print(f'Usage: python {sys.argv[0]} [token]')
+
 
 if __name__ == '__main__':
     main()
