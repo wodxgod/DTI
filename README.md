@@ -25,8 +25,6 @@ Extract useful information from a single users Discord authorization token.
 - Nitro information (status, expiration date in days)
 
 # TODO
-- Amount of friends
 - Amount of guilds
 - Owned guilds
 - Current status (online, offline ... custom status)
-- Connections
